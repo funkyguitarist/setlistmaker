@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Setlistmaker</title>
+  <style>
+    .liste {border:1px solid silver;width:250px;height:400px;margin:8px;
+    border-radius: 5px;}
+
+    .item{font-size:20px;width:70%;margin:5px 0px 5px 20px;
+    }
+
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <script>
+
+function sortable_jquery()
+{
+   $( "#sortable1, #sortable2, #sortable3,#sortable4,#sortable5" ).sortable({
+      connectWith: ".liste"
+    }).disableSelection();
+}
+    
+var m_data = ["","",""];
+
+var ausgew_item;
+var ausgew_data_index = 0;
+var zw;
+ 
+function init()
+{
+  get_data();
+}
+
+function aufbau()
+{
+  document.getElementById('buehne').innerHTML="";
+  var reihenhalter = document.createElement('div');
+  reihenhalter.style.float="left";
+  //reihenhalter.style.backgroundColor="red";
+  var reihe1 = reihe();
+  var l1 = liste(); l1.id="sortable1";
+  var l2 = liste(); l2.id="sortable2";
+  reihe1.appendChild(l1); reihe1.appendChild(l2);
+
+  var reihe2 = reihe();
+  var l3 = liste(); l3.id="sortable3";
+  var l4 = liste(); l4.id="sortable4";
+  reihe2.appendChild(l3); reihe2.appendChild(l4);
+
+  var songpool_halter = document.createElement('div');
+  songpool_halter.style.float="left";
+
+  var l5 = liste(); l5.id="sortable5";
+  l5.style.height="800px";
+  l5.style.overflow="auto";
+  songpool_halter.appendChild(l5);
+
+
+  reihenhalter.appendChild(reihe1);
+  reihenhalter.appendChild(reihe2);
+
+  document.getElementById('buehne').appendChild(reihenhalter);
+  document.getElementById('buehne').appendChild(songpool_halter);  
+
+  sortable_jquery();
+  
+
+
+}
+
+function reihe()
+{
+  var reihe=document.createElement('div');
+  reihe.style.display="flex";
+  reihe.style.flexDirection="row";
+  return reihe;
+}
+function liste()
+{
+  var liste = document.createElement('ul');
+
+  liste.setAttribute('name','m_liste');
+  liste.className="liste";
+
+  liste.ondblclick=function()
+  {
+    var n = neuer_item();
+    this.appendChild(n);
+  }
+  return liste;
+}
+
+  function neuer_item(){
+
+    var n = document.createElement('div');
+    n.style.borderBottom="1px dashed silver";
+    n.setAttribute('name','item_aussen');
+    n.ondblclick=function(e)
+    {
+      e.stopPropagation();
+      console.log("this");
+      this.parentNode.removeChild(this);
+    }
+    
+    var i = document.createElement('input');     
+    i.style.width="80%"
+    i.style.fontSize="20px";
+    i.style.marginLeft="10px";
+    i.style.marginTop="5px";
+    i.style.border="none";
+
+
+    i.setAttribute('name','m_i');
+    i.onkeyup=function()
+    {
+      this.setAttribute('value',this.value);
+    }
+    n.appendChild(i);
+    return n;
+  }
+
+
+  function test(e)
+  {
+    console.log(e.target);
+    var n_item = neuer_item();
+    e.target.appendChild(n_item);
+
+  }
+
+function listener_liste()
+{
+
+  var alle_listen = document.querySelectorAll('[name="m_liste"');
+  
+  for (var a=0;a<alle_listen.length;a++)
+  {
+    alle_listen[a].addEventListener('dblclick',test);   
+  }
+}
+
+function listener_item()
+{
+      
+  var items=document.querySelectorAll('[name="m_i"]');
+
+  for(var a=0; a<items.length;a++)
+    {
+        
+      items[a].onkeyup=function(e)
+      {
+        e.stopPropagation();
+        this.setAttribute('value',this.value);
+        }
+      }
+
+
+} 
+
+
+function listener_item_aussen()
+{
+  var items=document.querySelectorAll('[name="item_aussen"]');     
+
+  for(var a=0; a<items.length;a++)
+    {
+        
+      items[a].ondblclick=function(e)
+      {
+        e.stopPropagation();
+        this.parentNode.removeChild(this);
+        }
+      }
+}
+
+
+
+function anz()
+{
+  console.log(document.body.innerHTML);   
+}
+
+
+function inhalt_erneuern()
+{
+
+  zw= document.getElementById('buehne').innerHTML;
+  document.getElementById('buehne').innerHTML="";
+
+  document.getElementById('buehne').innerHTML=zw;
+  init();
+}
+
+function daten_aktualisieren()
+{
+
+  m_data[ausgew_data_index]=document.getElementById('buehne').innerHTML;
+}
+
+function daten_auswaehlen(inp)
+{
+
+
+  if(m_data[inp]==="")
+  {
+    console.log("null");
+    aufbau();
+
+  }
+
+  else{
+    document.getElementById('buehne').innerHTML=m_data[inp];     
+    listener_item();
+    listener_liste();
+    listener_item_aussen();
+    sortable_jquery();
+  }
+
+  
+  document.getElementById('seitenanzeige').innerHTML=inp;
+  ausgew_data_index=inp;
+  
+}
+
+
+function save()
+{
+    
+m_data[ausgew_data_index]=document.getElementById('buehne').innerHTML;
+console.log("save data");
+var inh = JSON.stringify(m_data).replace(/\\"/g, '"'); 
+    inh=inh.replace(/;\"/g,";'"); 
+    inh=inh.replace(/=\"/g,"='");    
+    inh=inh.replace(/\" /g,"' ");    
+    inh=inh.replace(/\">/g,"'>");    
+console.log(inh);    
+localStorage.setItem('slm',inh);  
+// ["  ","  "]
+//console.log(inh);
+ $.ajax({
+    type : "POST",
+    url : "php/speichern.php",
+    dataType : 'text', 
+    data : {
+        inhalt : inh /* convert here only */
+    },
+    sucess : function()
+    {
+      console.log("es wurde gespeichert");
+
+    }
+  });
+
+}
+     
+function get_data()
+{
+  console.log("get data");
+
+   $.ajax({ 
+            type: 'GET', 
+            url: 'php/m_daten.txt?random='+ Math.random(),     
+            dataType:'text',
+            success: function (data) { 
+                m_data = JSON.parse(data);
+                document.getElementById('buehne').innerHTML=m_data[0];
+                listener_item();
+                listener_liste();
+                listener_item_aussen();  
+                sortable_jquery();
+          
+            }
+          });
+
+}
+
+</script>
+</head>
+<body onload="get_data();">
+
+  <div name="menue" style="display:flex;flex-direction: row;">   
+    <button onclick="anz()">anz</button>
+    <button onclick="save()">save</button>
+    
+
+      <div name="nummernfeld" style="display:flex;flex-direction: row;margin-left:20px;">
+        <button onmousedown="daten_aktualisieren()"  onmouseup="daten_auswaehlen(0)">0</button>
+        <button onmousedown="daten_aktualisieren();"   onmouseup="daten_auswaehlen(1)">1</button>
+        <button onmousedown="daten_aktualisieren();"   onmouseup="daten_auswaehlen(2)">2</button>     
+      </div>
+      <div id="seitenanzeige" style="font-size: 25px;margin-left: 10px;">0</div>
+  </div>
+
+ 
+<div  id="buehne" style="display:flex;
+flex-direction: row;">
+
+</div>
+
+ 
+ 
+</body>
+</html>
