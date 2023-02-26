@@ -1,7 +1,7 @@
 # setlistmaker
 a dragndrop program for creating setlists for music
 
-On a dinA4 page you can create 4 sets with 9 pieces of music for ervery set.
+On a dinA4 page you can create 4 sets with 9 pieces of music for every set.
 You can move songs around and there is a pool of songs you can choose from.
 The print out is optimized for dinA4 pages.
 You can duplicate, edit and erase your sets. Saving with a php file is included.
