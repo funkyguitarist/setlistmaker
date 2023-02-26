@@ -8,7 +8,7 @@ You can duplicate, edit and erase your sets. Saving with a php file is included.
 Easy drag n drop installation if your on a normal webspace supporting  HTML,PHP    / Apache Server  
   
   
-online version for testing can be found [here](markscheel.de/archiv/setlistmaker/github-showoff)
+online version for testing can be found [here](https://markscheel.de/archiv/setlistmaker/github-showoff)
 
 
 ![Bildschirmfoto 2023-02-26 um 14 14 02](https://user-images.githubusercontent.com/12836086/221412611-35ca8b8f-b4b0-4f53-ba3d-d56b22a093a1.png)
