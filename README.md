@@ -6,6 +6,13 @@ You can move songs around and there is a pool of songs you can choose from.
 The print out is optimized for dinA4 pages.
 You can duplicate, edit and erase your sets. Saving with a php file is included.
 Easy drag n drop installation if your on a normal webspace supporting  HTML,PHP    / Apache Server  
+
+To make a new title, double click somewhere beneath an existing title
+To delete a title double click on a title
+To edit a title just click inside the title
+
+on the right side you find the songpool. The Songpool is excluded from printout.
+Drag n drop  the song around until you  re satisfied with your sets.
   
   
 online version for testing can be found [here](https://markscheel.de/archiv/setlistmaker/github-showoff)
