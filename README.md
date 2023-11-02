@@ -12,7 +12,7 @@ To delete a title double click on a title
 To edit a title just click inside the title
 
 on the right side you find the songpool. The Songpool is excluded from printout.
-Drag n drop  the song around until you  re satisfied with your sets.
+Drag n drop  the songs around until you  are satisfied with your sets.
   
   
 online version for testing can be found [here](https://markscheel.de/archiv/setlistmaker/github-showoff)
